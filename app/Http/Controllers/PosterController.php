@@ -12,7 +12,7 @@ class PosterController extends Controller
         return view('poster.index');
     }
 
-    public function generate(Request $request): View
+    public function generate(Request $request)
     {
         $validated = $request->validate([
             'product_name' => ['required', 'string', 'max:100'],
@@ -23,7 +23,7 @@ class PosterController extends Controller
             'poster_prompt' => ['required', 'string', 'max:1000'],
         ]);
 
-        $styleNames = [
+        $styles = [
             'modern' => 'Modern dan Profesional',
             'minimalis' => 'Minimalis',
             'elegan' => 'Elegan dan Premium',
@@ -31,15 +31,18 @@ class PosterController extends Controller
             'futuristik' => 'Futuristik',
         ];
 
+        $productName = $validated['product_name'];
+        $style = $styles[$validated['poster_style']];
+        $description = $validated['poster_prompt'];
+
         $concept = [
-            'product_name' => $validated['product_name'],
-            'style' => $styleNames[$validated['poster_style']],
-            'description' => $validated['poster_prompt'],
-            'headline' => 'Temukan ' . $validated['product_name'] . ' Pilihanmu!',
-            'visual_idea' => 'Gunakan gaya '
-                . $styleNames[$validated['poster_style']]
-                . ' dengan fokus visual pada produk, '
-                . 'judul promosi yang jelas, dan tata letak yang menarik.',
+            'product_name' => $productName,
+            'style' => $style,
+            'description' => $description,
+            'headline' => $productName,
+            'tagline' => $description,
+            'call_to_action' => 'PILIH PRODUK FAVORITMU',
+            'visual_idea' => 'Ilustrasi produk dekoratif.',
         ];
 
         return view('poster.index', [

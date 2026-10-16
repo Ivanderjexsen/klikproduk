@@ -178,4 +178,32 @@
     </div>
 </section>
 
+<section id="galeri" class="py-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">Galeri Contoh Poster</h2>
+            <p class="text-muted">Inspirasi promosi untuk bisnis Anda.</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach ([
+                ['🍔', 'Poster Makanan', 'Promosi kuliner'],
+                ['👕', 'Poster Fashion', 'Promosi pakaian'],
+                ['☕', 'Poster Minuman', 'Promosi minuman'],
+            ] as $poster)
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div style="font-size: 4rem;">{{ $poster[0] }}</div>
+                        <h5 class="fw-bold mt-3">{{ $poster[1] }}</h5>
+                        <p class="text-muted">{{ $poster[2] }}</p>
+                        <a href="{{ route('poster.index') }}"
+                           class="btn btn-success">
+                            Buat Poster AI
+                        </a>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
 @endsection

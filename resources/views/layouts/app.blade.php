@@ -51,7 +51,7 @@
             transform: translateY(-1px);
         }
 
-        /* Tombol login admin */
+        /* Tombol login */
         .btn-kp-login {
             color: var(--kp-green);
             background: #fff;
@@ -172,6 +172,7 @@
                 border-top: 1px solid #e8eee9;
             }
 
+            .navbar-actions .btn-kp-login,
             .navbar-actions .btn {
                 width: 100%;
                 text-align: center;
@@ -194,7 +195,8 @@
             </a>
 
             {{-- Tombol menu untuk HP --}}
-            <button class="navbar-toggler" type="button"
+            <button class="navbar-toggler"
+                    type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarKlikProduk"
                     aria-controls="navbarKlikProduk"
@@ -205,62 +207,61 @@
 
             <div class="collapse navbar-collapse" id="navbarKlikProduk">
 
-                {{-- Menu navigasi utama --}}
+                {{-- Menu navigasi --}}
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
 
+                    {{-- Beranda --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">
                             Beranda
                         </a>
                     </li>
 
+                    {{-- Buat Poster AI: hanya satu menu --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('products.index') }}">
-                            Produk
+                        <a class="nav-link" href="{{ route('poster.index') }}">
+                            Buat Poster AI
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}#fitur">
-                            Fitur
-                        </a>
-                    </li>
+                    {{-- Menu untuk pengunjung yang belum login --}}
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('home') }}#galeri">
+                                Galeri Contoh Poster
+                            </a>
+                        </li>
+                    @endguest
 
+                    {{-- Menu khusus setelah login --}}
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/produk') }}">
+                                Katalog Galeri Contoh Poster
+                            </a>
+                        </li>
+                    @endauth
+
+                    {{-- Cara kerja --}}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}#cara-kerja">
                             Cara Kerja
                         </a>
                     </li>
 
-                    {{-- Menu khusus admin yang sudah login --}}
-                    @auth
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('products.index') }}">
-                                Kelola Produk
-                            </a>
-                        </li>
-                    @endauth
-
                 </ul>
 
-                {{-- Area tombol di sisi kanan navbar --}}
+                {{-- Tombol di sisi kanan navbar --}}
                 <div class="navbar-actions d-flex align-items-lg-center gap-2 ms-lg-4">
 
-                    {{-- Tombol utama --}}
-                    <a class="btn btn-kp"
-                       href="{{ route('home') }}#fitur">
-                        Jelajahi Fitur
-                    </a>
-
-                    {{-- Tombol login hanya untuk pengunjung yang belum login --}}
+                    {{-- Login untuk pengunjung --}}
                     @guest
-                        <a class="btn-kp-login"
-                           href="{{ route('login') }}">
-                            Login Admin
+                        <a class="btn-kp-login" href="{{ route('login') }}">
+                            Login
                         </a>
                     @endguest
 
-                    {{-- Tombol logout hanya untuk admin yang sudah login --}}
+                    {{-- Logout untuk pengguna yang sudah login --}}
                     @auth
                         <form action="{{ route('logout') }}"
                               method="POST"
